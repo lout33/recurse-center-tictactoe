@@ -9,9 +9,11 @@ WIN_LINES = (
     (2, 4, 6),
 )
 
+EMPTY_CELL = " "
+
 
 def create_board():
-    return [" "] * 9
+    return [EMPTY_CELL] * 9
 
 
 def render_board(board):
@@ -27,11 +29,11 @@ def display_board(board):
 
 
 def get_available_moves(board):
-    return [index for index, value in enumerate(board) if value == " "]
+    return [index for index, value in enumerate(board) if value == EMPTY_CELL]
 
 
 def is_valid_move(board, move):
-    return move in get_available_moves(board)
+    return 0 <= move < len(board) and board[move] == EMPTY_CELL
 
 
 def apply_move(board, move, marker):
@@ -41,7 +43,7 @@ def apply_move(board, move, marker):
 def check_winner(board):
     for a, b, c in WIN_LINES:
         line = board[a], board[b], board[c]
-        if line[0] != " " and line[0] == line[1] == line[2]:
+        if line[0] != EMPTY_CELL and line[0] == line[1] == line[2]:
             return line[0]
     return None
 
