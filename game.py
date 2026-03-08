@@ -1,3 +1,4 @@
+# All row, column, and diagonal combinations that count as a win.
 WIN_LINES = (
     (0, 1, 2),
     (3, 4, 5),
@@ -10,18 +11,22 @@ WIN_LINES = (
 )
 
 EMPTY_CELL = " "
+BOARD_SIZE = 9
+ROW_SIZE = 3
+ROW_SEPARATOR = "\n-----------\n"
 
 
 def create_board():
-    return [EMPTY_CELL] * 9
+    return [EMPTY_CELL] * BOARD_SIZE
 
 
 def render_board(board):
     rows = []
-    for start in range(0, 9, 3):
-        row = " | ".join(board[start:start + 3])
+    for start in range(0, BOARD_SIZE, ROW_SIZE):
+        cells = board[start:start + ROW_SIZE]
+        row = " | ".join(cells)
         rows.append(f" {row} ")
-    return "\n-----------\n".join(rows)
+    return ROW_SEPARATOR.join(rows)
 
 
 def display_board(board):
@@ -42,9 +47,16 @@ def apply_move(board, move, marker):
 
 def check_winner(board):
     for a, b, c in WIN_LINES:
-        line = board[a], board[b], board[c]
-        if line[0] != EMPTY_CELL and line[0] == line[1] == line[2]:
-            return line[0]
+        first = board[a]
+        second = board[b]
+        third = board[c]
+
+        if first == EMPTY_CELL:
+            continue
+
+        if first == second == third:
+            return first
+
     return None
 
 
@@ -53,5 +65,5 @@ def is_draw(board):
 
 
 def board_positions_guide():
-    guide = [str(index + 1) for index in range(9)]
+    guide = [str(index + 1) for index in range(BOARD_SIZE)]
     return render_board(guide)

@@ -8,9 +8,19 @@ from game import (
     is_valid_move,
 )
 
+VALID_RANGE_MESSAGE = "Please enter a number from 1 to 9."
+
 
 def current_marker(turn_number):
     return "X" if turn_number % 2 == 0 else "O"
+
+
+def show_intro():
+    print("Welcome to Tic Tac Toe")
+    print()
+    print("Board positions:")
+    print(board_positions_guide())
+    print()
 
 
 def parse_move(raw_value):
@@ -30,7 +40,7 @@ def prompt_for_move(board, marker):
 
         move = parse_move(raw_value)
         if move is None:
-            print("Please enter a number from 1 to 9.")
+            print(VALID_RANGE_MESSAGE)
             continue
 
         if not is_valid_move(board, move):
@@ -51,11 +61,7 @@ def play_game():
     board = create_board()
     turn_number = 0
 
-    print("Welcome to Tic Tac Toe")
-    print()
-    print("Board positions:")
-    print(board_positions_guide())
-    print()
+    show_intro()
 
     while True:
         display_board(board)
