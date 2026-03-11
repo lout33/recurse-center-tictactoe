@@ -21,10 +21,64 @@ The initial version should support:
 
 During the pairing interview, add a computer player.
 
+## Pseudocode-Driven Development
+
+The goal is to explain the design first, then implement it in small steps.
+
+Current game flow:
+
+```text
+start game
+create empty board
+show intro and board positions
+set Player 1 to X
+set Player 2 to O
+set current player to 1
+
+repeat until game ends:
+    display board
+    ask the current player for a move
+    validate the input
+
+    place marker on board
+
+    if someone won:
+        end game
+
+    if the board is full:
+        end game as draw
+
+    switch current player
+```
+
+Note:
+
+- The code tracks turns with player numbers (`1` and `2`). Player 1 is always `X`, Player 2 is always `O`, and Player 1 goes first. This keeps the flow easy to explain.
+
+Planned interview extension:
+
+```text
+for each turn:
+    display board
+
+    if current player is human:
+        prompt for move
+    else:
+        choose a valid computer move
+
+    apply move
+
+    if someone won:
+        end game
+
+    if board is full:
+        end game as draw
+```
+
 Suggested order:
 
-1. Add a way to choose `human` or `computer` for player O.
-2. Implement a simple random move generator.
+1. Let Player 2 become a computer player.
+2. Implement a simple random move generator for `O`.
 3. If time remains, improve the computer player to:
    - take a winning move
    - block an opponent's winning move
