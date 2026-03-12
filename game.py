@@ -21,12 +21,19 @@ def create_board():
 
 
 def render_board(board):
-    rows = []
-    for start in range(0, BOARD_SIZE, ROW_SIZE):
-        cells = board[start:start + ROW_SIZE]
-        row = " | ".join(cells)
-        rows.append(f" {row} ")
-    return ROW_SEPARATOR.join(rows)
+    formatted_rows = []
+
+    for row_index in range(ROW_SIZE):
+        # Convert the flat board into visual rows of 3 cells each.
+        row_start = row_index * ROW_SIZE
+        row_cells = board[row_start:row_start + ROW_SIZE]
+
+        # Turn something like ["X", "O", " "] into "X | O |  ".
+        formatted_row = " | ".join(row_cells)
+        formatted_rows.append(f" {formatted_row} ")
+
+    # Join the 3 rendered rows with a horizontal separator.
+    return ROW_SEPARATOR.join(formatted_rows)
 
 
 def display_board(board):
@@ -47,13 +54,16 @@ def apply_move(board, move, marker):
 
 def check_winner(board):
     for a, b, c in WIN_LINES:
+        # Look up the 3 cells that make up one possible winning line.
         first = board[a]
         second = board[b]
         third = board[c]
 
+        # An empty line cannot be a winning line.
         if first == EMPTY_CELL:
             continue
 
+        # If all 3 cells match, return the winning marker.
         if first == second == third:
             return first
 
@@ -65,5 +75,6 @@ def is_draw(board):
 
 
 def board_positions_guide():
+    # Build a reference board so players can see how numbers map to squares.
     guide = [str(index + 1) for index in range(BOARD_SIZE)]
     return render_board(guide)
